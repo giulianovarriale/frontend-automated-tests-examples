@@ -1,4 +1,4 @@
-import { NewAdvertisementForm } from "@/components/new-advertisement-form";
+import { NewAdvertisementForm } from "@/components/ui/new-advertisement-form/new-advertisement-form";
 
 export default function Home() {
   return (
