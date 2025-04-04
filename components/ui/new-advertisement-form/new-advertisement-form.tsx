@@ -25,7 +25,12 @@ import {
   type AdvertisementForm,
 } from "./advertisement-schema";
 
+import { createAdvertisement } from "@/actions/create-advertisement";
+import { useToast } from "@/hooks/use-toast";
+
 export function NewAdvertisementForm() {
+  const { toast } = useToast();
+
   const form = useForm<AdvertisementForm>({
     resolver: zodResolver(advertisementSchema),
     defaultValues: {
@@ -35,8 +40,18 @@ export function NewAdvertisementForm() {
     },
   });
 
-  function onSubmit(values: AdvertisementForm) {
-    console.log(values);
+  async function onSubmit(values: AdvertisementForm) {
+    try {
+      await createAdvertisement(values);
+
+      toast({
+        title: "Advertisement was successfully posted.",
+      });
+    } catch {
+      toast({
+        title: "Something went wrong. Please try again or contact support.",
+      });
+    }
   }
 
   return (
