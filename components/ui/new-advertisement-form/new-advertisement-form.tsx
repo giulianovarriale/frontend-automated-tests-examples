@@ -5,12 +5,19 @@ import { FieldHelper } from "@/components/ui/field-helper";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
+const fieldIds = {
+  title: "title",
+  description: "description",
+  price: "price",
+};
+
 export function NewAdvertisementForm() {
   return (
     <form className="space-y-8">
       <div className="space-y-2">
-        <Label>Title</Label>
-        <Input placeholder="e.g. Brand New iPhone 13 Pro" />
+        <Label htmlFor={fieldIds.title}>Title</Label>
+
+        <Input id={fieldIds.title} placeholder="e.g. Brand New iPhone 13 Pro" />
 
         <FieldHelper>
           A clear, concise title for your advertisement.
@@ -18,8 +25,10 @@ export function NewAdvertisementForm() {
       </div>
 
       <div className="space-y-2">
-        <Label>Description</Label>
+        <Label htmlFor={fieldIds.description}>Description</Label>
+
         <Textarea
+          id={fieldIds.description}
           placeholder="Describe your item or service in detail..."
           className="min-h-32"
         />
@@ -31,19 +40,19 @@ export function NewAdvertisementForm() {
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="space-y-2">
-          <Label>Price ($)</Label>
-          <Input placeholder="99.99" />
+          <Label htmlFor={fieldIds.price}>Price ($)</Label>
+          <Input id={fieldIds.price} placeholder="99.99" />
 
           <FieldHelper>Enter the price in dollars.</FieldHelper>
         </div>
       </div>
 
-      <Label className="block space-y-6 border rounded-md p-4">
+      <div className="block space-y-6 border rounded-md p-4">
         <div className="flex space-x-3">
-          <Checkbox />
+          <Checkbox id="checkbox" />
 
           <div className="space-y-2 leading-none">
-            <div>Allow bidding</div>
+            <Label htmlFor="checkbox">Allow bidding</Label>
 
             <FieldHelper>
               Enable this option if you want to allow buyers to bid on your
@@ -51,7 +60,7 @@ export function NewAdvertisementForm() {
             </FieldHelper>
           </div>
         </div>
-      </Label>
+      </div>
 
       <Button type="submit" className="w-full md:w-auto">
         Post Advertisement
