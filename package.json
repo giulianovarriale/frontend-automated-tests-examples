@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "vitest"
+    "test": "vitest",
+    "e2e:open": "cypress open",
+    "e2e:run": "cypress run"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
@@ -41,6 +43,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^4.3.4",
+    "cypress": "^14.2.1",
     "eslint": "^9",
     "eslint-config-next": "15.1.0",
     "jsdom": "^26.0.0",
