@@ -27,9 +27,11 @@ import {
 
 import { createAdvertisement } from "@/actions/create-advertisement";
 import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 export function NewAdvertisementForm() {
   const { toast } = useToast();
+  const router = useRouter();
 
   const form = useForm<AdvertisementForm>({
     resolver: zodResolver(advertisementSchema),
@@ -47,7 +49,9 @@ export function NewAdvertisementForm() {
       toast({
         title: "Advertisement was successfully posted.",
       });
-    } catch (error) {
+
+      router.push("/");
+    } catch {
       toast({
         title: "Something went wrong. Please try again or contact support.",
       });
@@ -91,7 +95,7 @@ export function NewAdvertisementForm() {
               </FormControl>
 
               <FormDescription>
-                Provide detailed information about what you're selling.
+                Provide detailed information about what you are selling.
               </FormDescription>
 
               <FormMessage />

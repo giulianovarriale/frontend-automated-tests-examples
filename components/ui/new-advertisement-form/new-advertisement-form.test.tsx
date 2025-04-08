@@ -1,11 +1,17 @@
 import { expect, test, vi } from "vitest";
-import { logRoles, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { NewAdvertisementForm } from "./new-advertisement-form";
 import { Toaster } from "../toaster";
 import { createAdvertisement } from "@/actions/create-advertisement";
 
 vi.mock("@/actions/create-advertisement");
+
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+  }),
+}));
 
 test("fields are in the document", () => {
   render(<NewAdvertisementForm />);
