@@ -1,0 +1,66 @@
+name: End-to-end tests
+on: push
+jobs:
+  cypress-run:
+    runs-on: ubuntu-24.04
+
+    services:
+      postgres:
+        image: postgres:15
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpass
+          POSTGRES_DB: testdb
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+          
+    env:
+      DATABASE_URL: postgres://testuser:testpass@localhost:5432/testdb
+      DIRECT_URL: postgres://testuser:testpass@localhost:5432/testdb
+      NODE_ENV: test
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: |
+          pnpm i --frozen-lockfile
+
+      - name: Install Cypress
+        run: |
+          pnpm exec cypress install
+
+      - name: Run DB migrations
+        run: pnpm run db:migrate
+
+      - name: Cypress tests
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          build: pnpm run build
+          start: pnpm run start
+
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
