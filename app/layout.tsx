@@ -1,6 +1,5 @@
 import type React from "react";
 import "@/app/globals.css";
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Header } from "@/components/header";
 
